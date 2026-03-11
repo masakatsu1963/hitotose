@@ -1,0 +1,1236 @@
+/* ===================================================
+   ひととせ - スタイルシート
+   スマートフォン最適化・モバイルファースト設計
+   =================================================== */
+
+/* --- リセット・基本設定 --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', '游明朝', serif;
+  background-color: #f0f0f0;
+  color: #222;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ===================================================
+   ヘッダー
+   =================================================== */
+.app-header {
+  position: relative;
+  width: 100%;
+}
+
+/* 写真フレーム */
+.hero-image-frame {
+  width: 100%;
+  min-height: 200px;
+  background-color: #c8c8c8;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-image-placeholder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#heroImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-placeholder-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+/* ヘッダーナビゲーションボタン（写真の上に重なる） */
+.header-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  padding: 0 40px 16px;
+  pointer-events: none;
+}
+
+.nav-circle-btn {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  border: none;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 0.85rem;
+  color: #333;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+.nav-circle-btn:active {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(0.96);
+}
+
+/* アプリタイトルバー（虹色グラデーション）→削除 */
+.title-bar {
+  display: none;
+}
+
+/* アプリ名：ヒーロー写真内に白抗きで表示 */
+.hero-app-title {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.4);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ===================================================
+   メインコンテンツ
+   =================================================== */
+.app-main {
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+/* ===================================================
+   日付セクション
+   =================================================== */
+.date-section {
+  padding: 10px 16px 6px;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+
+.year-display {
+  font-size: 0.95rem;
+  color: #555;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.date-arrow {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #c0392b;
+  cursor: pointer;
+  padding: 4px 10px;
+  transition: opacity 0.2s;
+}
+
+.date-arrow:active {
+  opacity: 0.5;
+}
+
+.date-display {
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: #222;
+  white-space: nowrap;
+  text-align: center;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.today-btn-wrap {
+  margin-top: 4px;
+}
+
+/* 旧暦・月の旧名行 */
+.kyureki-row {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: #666;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 2px;
+}
+
+/* 旧月名ブロック（日付と旧暦の間） */
+.month-name-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px auto 3px;
+  padding: 4px 16px;
+  border: none;
+  background: none;
+  width: fit-content;
+  letter-spacing: 0.12em;
+  gap: 0.5em;
+}
+
+.month-name-deco {
+  font-size: 0.65rem;
+  color: #c4a882;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.kyureki-divider {
+  width: 60%;
+  max-width: 200px;
+  margin: 2px auto 4px;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.month-name-kanji {
+  font-size: 1.1rem;
+  color: #8B6A4A;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-weight: 400;
+}
+
+.month-name-reading {
+  font-size: 0.72rem;
+  color: #b89a7a;
+  margin-left: 0.4em;
+  letter-spacing: 0.1em;
+}
+
+.kyureki-label {
+  font-size: 0.72rem;
+  color: #999;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 1px 5px;
+  letter-spacing: 0.05em;
+}
+
+.kyureki-sep {
+  color: #ccc;
+  font-size: 0.8rem;
+}
+
+.kyureki-month-name {
+  font-size: 1.0rem;
+  color: #8B6A4A;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+}
+
+.kyureki-date {
+  color: #555;
+  letter-spacing: 0.06em;
+}
+
+.today-btn {
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 20px;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+
+/* ===================================================
+   節気・候セクション
+   =================================================== */
+.sekki-section {
+  width: 100%;
+  position: relative;
+  /* 節気帯は各ブロックに固有色を持つため、全体背景は中立色に固定 */
+  background: #e8e8e8;
+}
+
+.marker-top {
+  text-align: center;
+  color: #c0392b;
+  font-size: 1.0rem;
+  padding: 2px 0 0;
+  line-height: 1;
+}
+
+.marker-bottom {
+  text-align: center;
+  color: #c0392b;
+  font-size: 1.0rem;
+  padding: 0 0 2px;
+  line-height: 1;
+}
+
+/* 節気スライド帯 */
+.sekki-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 2px 0 2px;
+}
+
+.sekki-belt {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* 節気ブロック：幅はJSで設定、背景色はJSで固有色を直接設定 */
+.sekki-block {
+  flex-shrink: 0;
+  padding: 10px 8px;
+  min-height: 52px;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-right: 2px solid rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sekki-block.sekki-current .sekki-name {
+  opacity: 1;
+}
+
+.sekki-block:not(.sekki-current) .sekki-name {
+  opacity: 0.45;
+}
+
+.sekki-block:not(.sekki-current) .sekki-reading {
+  opacity: 0.35;
+}
+
+.sekki-name {
+  font-size: 1.6rem;
+  color: #fff;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  display: inline;
+}
+
+.sekki-reading {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.12em;
+  margin-left: 0.4em;
+  display: inline;
+}
+
+/* ===================================================
+   七十二候スライド帯
+   =================================================== */
+
+/* 窓枠：帯の見える部分だけ表示 */
+.kou-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* 帯本体：全候が横一列に並ぶ */
+.kou-belt {
+  display: flex;
+  /* translateXはJSで設定 */
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+/* 候ブロック：幅はJSで動的設定（画面幅÷3） */
+.kou-block {
+  flex-shrink: 0;
+  /* width: JSで設定 */
+  padding: 10px 6px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255,255,255,0.12);
+  transition: background 0.2s;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  min-height: 57px;
+}
+
+.kou-block:active {
+  background: rgba(255,255,255,0.25);
+}
+
+/* 現在の候を強調 */
+.kou-block.kou-current {
+  background: rgba(255,255,255,0.22);
+}
+
+/* 候ブロック内の初候・次候・末候ラベル */
+.kou-position-label {
+  font-size: 0.62rem;
+  color: rgba(60,60,60,0.65);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.kou-block.kou-current .kou-position-label {
+  color: rgba(40,40,40,0.75);
+  font-size: 0.68rem;
+}
+
+.kou-name {
+  font-size: 1.0rem;
+  color: #444;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+}
+
+.kou-block.kou-current .kou-name {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.kou-reading {
+  font-size: 0.56rem;
+  color: rgba(60,60,60,0.6);
+  letter-spacing: 0.03em;
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+.kou-block.kou-current .kou-reading {
+  font-size: 0.72rem;
+  color: rgba(40,40,40,0.7);
+}
+
+/* ===================================================
+   ボトムナビゲーション
+   =================================================== */
+.bottom-nav {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px 12px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+  background-color: #f5f5f5;
+}
+
+/* クレジット */
+.app-credit {
+  text-align: center;
+  font-size: 0.65rem;
+  color: #aaa;
+  padding: 6px 0 10px;
+  background-color: #f5f5f5;
+  letter-spacing: 0.05em;
+}
+
+.credit-link {
+  color: #8B6A4A;
+  text-decoration: none;
+}
+
+.credit-link:hover {
+  text-decoration: underline;
+}
+
+.bottom-btn {
+  flex: 1;
+  padding: 8px 4px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: background 0.2s;
+}
+
+.bottom-btn:active {
+  background: #555;
+}
+
+.today-return-btn {
+  background: #555;
+}
+
+/* ===================================================
+   パネル（オーバーレイ）
+   =================================================== */
+.panel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.panel-content {
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.panel-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #333;
+}
+
+.panel-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.panel-body {
+  padding: 20px;
+}
+
+/* ===================================================
+   生活情報パネル
+   =================================================== */
+.info-sekki-badge {
+  display: inline-block;
+  background: #5090B0;
+  color: #fff;
+  font-size: 0.78rem;
+  padding: 3px 12px;
+  border-radius: 12px;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.info-kou-name {
+  font-size: 1.6rem;
+  color: #333;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.info-kou-reading {
+  font-size: 0.82rem;
+  color: #888;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.info-block {
+  margin-bottom: 18px;
+}
+
+.info-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+}
+
+.info-text {
+  font-size: 0.88rem;
+  color: #444;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.info-grid-item {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.info-grid-label {
+  font-size: 0.78rem;
+  color: #888;
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
+}
+
+.info-grid-value {
+  font-size: 0.9rem;
+  color: #333;
+  letter-spacing: 0.04em;
+}
+
+/* 襲の色目プレビュー（生活情報内） */
+.kasane-preview {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 4px;
+}
+
+.kasane-bar-wrap {
+  margin: 10px 0;
+}
+
+.kasane-bar {
+  width: 100%;
+  height: 32px;
+  border-radius: 6px;
+  /* 背景グラデーションはJSで設定 */
+}
+
+.kasane-name {
+  font-size: 1.1rem;
+  color: #333;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.kasane-reading {
+  font-size: 0.78rem;
+  color: #888;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* ===================================================
+   今日の予定パネル
+   =================================================== */
+.schedule-date {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: 0.08em;
+}
+
+.schedule-placeholder {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.schedule-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.schedule-note {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.8;
+  letter-spacing: 0.06em;
+}
+
+.schedule-note-sub {
+  font-size: 0.78rem;
+  color: #aaa;
+  margin-top: 8px;
+  letter-spacing: 0.06em;
+}
+
+/* ローディングスピナー */
+.schedule-loading {
+  text-align: center;
+  padding: 32px 0;
+}
+.schedule-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e0d8c8;
+  border-top-color: #8b7355;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 予定なし */
+.schedule-empty {
+  text-align: center;
+  padding: 32px 0;
+}
+
+/* エラー */
+.schedule-error {
+  text-align: center;
+  padding: 32px 0;
+}
+
+/* イベントリスト */
+.schedule-event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #ede8de;
+}
+.schedule-event-item:last-child {
+  border-bottom: none;
+}
+.schedule-event-time {
+  flex-shrink: 0;
+  min-width: 52px;
+  font-size: 0.85rem;
+  color: #8b7355;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding-top: 2px;
+  text-align: center;
+}
+.schedule-event-time.allday {
+  font-size: 0.72rem;
+  background: #8b7355;
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+.schedule-event-body {
+  flex: 1;
+}
+.schedule-event-title {
+  font-size: 0.95rem;
+  color: #333;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+.schedule-event-detail {
+  font-size: 0.78rem;
+  color: #888;
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+}
+
+/* 更新日時 */
+.schedule-updated {
+  font-size: 0.72rem;
+  color: #bbb;
+  text-align: right;
+  margin-top: 16px;
+  letter-spacing: 0.04em;
+}
+
+/* ===================================================
+   襲の色目パネル
+   =================================================== */
+.kasane-full {
+  padding: 4px 0;
+}
+
+.kasane-full-title {
+  font-size: 1.1rem;
+  color: #333;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.kasane-full-desc {
+  font-size: 0.84rem;
+  color: #666;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+}
+
+.kasane-current-block {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.kasane-bar-large {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.kasane-current-name {
+  font-size: 1.4rem;
+  color: #333;
+  letter-spacing: 0.15em;
+  text-align: center;
+}
+
+.kasane-current-reading {
+  font-size: 0.82rem;
+  color: #888;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.kasane-color-codes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.color-chip {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.color-code {
+  font-size: 0.78rem;
+  color: #888;
+  font-family: monospace;
+  letter-spacing: 0.04em;
+}
+
+.kasane-fashion-hint {
+  background: #fff8f0;
+  border-left: 3px solid #e67e22;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  font-size: 0.84rem;
+  color: #555;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* ===================================================
+   アプリの説明パネル
+   =================================================== */
+.about-content {
+  padding: 4px 0;
+}
+
+.about-app-name {
+  font-size: 2rem;
+  color: #333;
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.about-tagline {
+  font-size: 0.9rem;
+  color: #888;
+  text-align: center;
+  letter-spacing: 0.08em;
+  margin-bottom: 24px;
+}
+
+.about-block {
+  margin-bottom: 20px;
+}
+
+.about-block h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.about-block p {
+  font-size: 0.86rem;
+  color: #555;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.about-list {
+  list-style: none;
+  padding: 0;
+}
+
+.about-list li {
+  font-size: 0.86rem;
+  color: #555;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  padding: 4px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* ホーム画面追加手順 */
+.about-install-block {
+  background: #f8f6f2;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.about-install-lead {
+  font-size: 0.84rem;
+  color: #666;
+  margin-bottom: 14px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+.about-install-device {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e8e4de;
+}
+
+.about-install-device:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.about-install-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-install-content {
+  flex: 1;
+}
+
+.about-install-device-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+
+.about-install-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step-counter;
+}
+
+.about-install-steps li {
+  font-size: 0.84rem;
+  color: #555;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  padding: 4px 0 4px 24px;
+  position: relative;
+  counter-increment: step-counter;
+}
+
+.about-install-steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  background: #8b7355;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* 蓮華堂セクション */
+.rengedo-section {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.rengedo-logo-wrap {
+  margin: 0 auto 12px;
+  text-align: center;
+}
+
+.rengedo-logo-img {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.rengedo-text {
+  font-size: 0.84rem;
+  color: #666;
+  margin-bottom: 8px;
+  letter-spacing: 0.06em;
+}
+
+.rengedo-link {
+  display: inline-block;
+  color: #3498db;
+  font-size: 0.86rem;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #3498db;
+  padding-bottom: 1px;
+}
+
+/* ===================================================
+   ユーティリティ
+   =================================================== */
+/* スクロールバー非表示（モバイル） */
+.panel-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* タップ時のハイライト無効化 */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===================================================
+   今日の一言バー（写真直下・独立エリア）
+   24節気カラー＋和柄パターン背景・白文字
+   =================================================== */
+.kotoba-bar {
+  position: relative;
+  width: 100%;
+  height: 26px;
+  min-height: 26px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+/* 和柄パターンレイヤー（絶対位置で背景全体に展開） */
+.kotoba-pattern {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 140px 140px;
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.kotoba-text {
+  position: relative;
+  z-index: 1;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 0.82rem;
+  color: #888;
+  text-align: center;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-shadow: none;
+  margin: 0;
+}
+
+/* ===================================================
+   旬の色あわせパネル
+   =================================================== */
+.iroawase-wrap {
+  padding: 4px 0;
+}
+
+.iroawase-main-block {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.iroawase-label {
+  font-size: 0.78rem;
+  color: #888;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.iroawase-bar {
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.iroawase-name {
+  font-size: 1.5rem;
+  color: #333;
+  letter-spacing: 0.2em;
+  text-align: center;
+}
+
+.iroawase-reading {
+  font-size: 0.8rem;
+  color: #888;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.iroawase-code {
+  font-size: 0.78rem;
+  color: #aaa;
+  text-align: center;
+  margin-top: 6px;
+  font-family: monospace;
+}
+
+.iroawase-sub-title {
+  font-size: 0.88rem;
+  color: #555;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.iroawase-sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.iroawase-sub-item {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.iroawase-sub-chip {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  border: 2px solid rgba(0,0,0,0.06);
+}
+
+.iroawase-sub-role {
+  font-size: 0.7rem;
+  color: #aaa;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.iroawase-sub-code {
+  font-size: 0.72rem;
+  color: #888;
+  font-family: monospace;
+}
+
+.iroawase-hint {
+  background: #fff8f0;
+  border-left: 3px solid #c8a97a;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  font-size: 0.84rem;
+  color: #555;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+
+.iroawase-coord-title {
+  font-size: 0.88rem;
+  color: #555;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.iroawase-coord-text {
+  font-size: 0.84rem;
+  color: #666;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* ===================================================
+   シェアボタン
+   =================================================== */
+.share-btn {
+  background: linear-gradient(135deg, #c8a97a, #a07850);
+  color: #fff;
+  border: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+
+.share-btn:active {
+  opacity: 0.85;
+}

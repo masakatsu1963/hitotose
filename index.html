@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ひととせ - 二十四節気・七十二候</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="images/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6b8c5a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ひととせ">
+  <meta name="description" content="二十四節気七十二候と、やさしく暮らす。季節の小さな変化にそっと目を向けるアプリです。">
+  <link rel="stylesheet" href="style.css?v=39">
+</head>
+<body>
+
+  <!-- ヘッダー：写真フレーム + ナビゲーション -->
+  <header class="app-header">
+    <!-- 写真フレーム -->
+    <div class="hero-image-frame" id="heroImageFrame">
+      <div class="hero-image-placeholder">
+        <img id="heroImage" alt="季節の写真" style="display:none;">
+        <div class="hero-placeholder-text" id="heroPlaceholder">季節の写真</div>
+      </div>
+      <!-- アプリ名：写真内に白抗きで表示 -->
+      <div class="hero-app-title">二十四節気・七十二候「ひととせ」</div>
+    </div>
+
+    <!-- ヘッダーナビゲーションボタン（写真の上に重なる・2つ） -->
+    <div class="header-nav">
+      <button class="nav-circle-btn" id="btnLifeInfo" onclick="showPanel('life')">
+        旬の情報
+      </button>
+      <button class="nav-circle-btn" id="btnKasane" onclick="showPanel('kasane')">
+        旬の配色
+      </button>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="app-main">
+
+    <!-- 節気・候表示エリア（グラデーション背景） -->
+    <section class="sekki-section" id="sekkiSection">
+      <!-- 上の三角マーカー -->
+      <div class="marker-top">&#9660;</div>
+
+      <!-- 節気スライド帯 -->
+      <div class="sekki-viewport" id="sekkiViewport">
+        <div class="sekki-belt" id="sekkiBelt">
+          <!-- 節気ブロックはJSで動的に生成 -->
+        </div>
+      </div>
+
+      <!-- 七十二候スライド帯 -->
+      <div class="kou-viewport" id="kouViewport">
+        <div class="kou-belt" id="kouBelt">
+          <!-- 候ブロックはJSで動的に生成 -->
+        </div>
+      </div>
+
+      <!-- 七十二候のふりがな表示バー（候帯と▲マーカーの間） -->
+      <div class="kotoba-bar" id="kotobaBar">
+        <div class="kotoba-pattern" id="kotobaPattern"></div>
+        <p class="kotoba-text" id="kotobaText">読み込み中...</p>
+      </div>
+
+      <!-- 下の三角マーカー -->
+      <div class="marker-bottom">&#9650;</div>
+    </section>
+
+    <!-- 日付表示エリア -->
+    <section class="date-section">
+      <!-- 年表示と日付ナビ -->
+      <div class="year-display" id="yearDisplay">2026 年</div>
+      <div class="date-nav">
+        <button class="date-arrow" id="btnPrevDay" onclick="changeDay(-1)">&#9664;</button>
+        <div class="date-display" id="dateDisplay">2 月 22 日（日）</div>
+        <button class="date-arrow" id="btnNextDay" onclick="changeDay(1)">&#9654;</button>
+      </div>
+      <!-- 旧月名ブロック（日付と旧暦の間） -->
+      <div class="month-name-block" id="monthNameDisplay">
+        <span class="month-name-deco">❖</span>
+        <span class="month-name-kanji">睦月</span><span class="month-name-reading">むつき</span>
+        <span class="month-name-deco">❖</span>
+      </div>
+      <!-- 旧月名と旧暦の間のライン -->
+      <div class="kyureki-divider"></div>
+      <!-- 旧暦 -->
+      <div class="kyureki-row">
+        <span class="kyureki-label">旧暦</span>
+        <span class="kyureki-date" id="kyurekiDate">正月 一日</span>
+        <span class="kyureki-sep" style="display:none;"></span>
+        <span class="kyureki-month-name" id="kyurekiMonthName" style="display:none;"></span>
+      </div>
+    </section>
+
+    <!-- ボトムナビゲーション -->
+    <nav class="bottom-nav">
+      <button class="bottom-btn" onclick="showPanel('about')">アプリの説明</button>
+      <button class="bottom-btn today-return-btn" id="bottomTodayBtn" onclick="goToToday()" style="display:none;">今日に戻る</button>
+      <button class="bottom-btn share-btn" onclick="shareApp()">&#128279; シェア</button>
+    </nav>
+
+    <!-- クレジット -->
+    <footer class="app-credit">
+      2026 <a href="https://www.rengedo.asia/" target="_blank" class="credit-link">蓮華堂</a> All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ===== パネル：旬の情報 ===== -->
+  <div class="panel-overlay" id="panelLife" style="display:none;">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2 class="panel-title" id="lifePanelTitle">旬の情報</h2>
+        <button class="panel-close" onclick="closePanel('life')">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="info-sekki-badge" id="lifeSekkiBadge">雨水</div>
+        <div class="info-kou-name" id="lifeKouName">土脉潤起</div>
+        <div class="info-kou-reading" id="lifeKouReading">つちのしょううるおいおこる</div>
+
+        <div class="info-block">
+          <h3 class="info-label">&#127807; この候について</h3>
+          <p class="info-text" id="lifeDescription">大地が雨に潤い始める頃。</p>
+        </div>
+
+        <div class="info-block">
+          <h3 class="info-label">&#127968; この時期の過ごし方</h3>
+          <p class="info-text" id="lifeLifestyle">春の訪れを感じながら、体を整える時期です。</p>
+        </div>
+
+        <div class="info-block">
+          <h3 class="info-label">&#127981; 全国の慣習・行事</h3>
+          <p class="info-text" id="lifeCustoms">春の行事が各地で始まります。</p>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-grid-item">
+            <div class="info-grid-label">&#127800; 花ごよみ</div>
+            <div class="info-grid-value" id="lifeFlower">沈丁花、梅、桃</div>
+          </div>
+          <div class="info-grid-item">
+            <div class="info-grid-label">&#127825; 魚ごよみ</div>
+            <div class="info-grid-value" id="lifeFish">サヨリ、ハマグリ、ホタルイカ</div>
+          </div>
+          <div class="info-grid-item">
+            <div class="info-grid-label">&#129382; 野菜ごよみ</div>
+            <div class="info-grid-value" id="lifeVegetable">菜の花、春キャベツ、アスパラガス</div>
+          </div>
+          <div class="info-grid-item">
+            <div class="info-grid-label">&#127807; 香りごよみ</div>
+            <div class="info-grid-value" id="lifeAroma">沈丁花、白梅、春霞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== パネル：旬の色あわせ ===== -->
+  <div class="panel-overlay" id="panelKasane" style="display:none;">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2 class="panel-title">旬の配色</h2>
+        <button class="panel-close" onclick="closePanel('kasane')">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="iroawase-wrap" id="iroawaseWrap">
+          <!-- JSで動的に生成 -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== パネル：アプリの説明 ===== -->
+  <div class="panel-overlay" id="panelAbout" style="display:none;">
+    <div class="panel-content">
+      <div class="panel-header">
+        <h2 class="panel-title">アプリの説明</h2>
+        <button class="panel-close" onclick="closePanel('about')">✕</button>
+      </div>
+      <div class="panel-body">
+        <div class="about-content">
+          <h3 class="about-app-name">ひととせ</h3>
+          <p class="about-tagline">二十四節気七十二候と、やさしく暮らす。</p>
+
+          <div class="about-block">
+            <h4>このアプリについて</h4>
+            <p>季節は、気づかないうちに少しずつ姿を変えていきます。</p>
+            <p>「ひととせ」は、その小さな変化にそっと目を向けるためのアプリです。</p>
+            <p>七十二候の情景を写した写真や、今が旬の魚や野菜、花の話。その季節をイメージした日本の伝統色と、日々の暮らしに取り入れやすい配色も楽しめます。</p>
+            <p>忙しい毎日の合間に、季節と呼吸を合わせるひととき。一年のめぐりを、やさしく感じてもらえたら。</p>
+          </div>
+
+          <div class="about-block">
+            <h4>主な機能</h4>
+            <ul class="about-list">
+              <li>今日の二十四節気・七十二候を写真とともに表示</li>
+              <li>候の読み仮名を帯の下に表示</li>
+              <li>新暦の月に対応した旧月名（睦月・如月など）を表示</li>
+              <li>旧暦の月日を併記</li>
+              <li>旬の花・魚・野菜・香り・行事を「旬の情報」で表示</li>
+              <li>季節の伝統色と配色を「旬の配色」で表示</li>
+            </ul>
+          </div>
+
+          <div class="about-block">
+            <h4>使い方</h4>
+            <ul class="about-list">
+              <li>◄ ► ボタンで日付を前後に移動できます</li>
+              <li>◄ ► ボタンの長押しで連続送り（徐々にスピードアップ）</li>
+              <li>「旬の情報」ボタンで旬の花・魚・野菜・香り・行事を確認</li>
+              <li>「旬の配色」ボタンで季節の伝統色と配色を確認</li>
+            </ul>
+          </div>
+
+          <!-- ホーム画面追加手順 -->
+          <div class="about-block about-install-block">
+            <h4>Webアプリのデスクトップへの残し方</h4>
+            <p class="about-install-lead">ホーム画面に追加すると、アプリのようにいつでもすぐ起動できます。</p>
+            <div class="about-install-device">
+              <div class="about-install-icon">&#63743;</div>
+              <div class="about-install-content">
+                <p class="about-install-device-name">iPhone （Safari）</p>
+                <ol class="about-install-steps">
+                  <li>Safariでこのページを開く</li>
+                  <li>画面下の共有ボタン（&#9633;↑）をタップ</li>
+                  <li>「ホーム画面に追加」を選択</li>
+                  <li>「追加」をタップして完了</li>
+                </ol>
+              </div>
+            </div>
+            <div class="about-install-device">
+              <div class="about-install-icon">&#129514;</div>
+              <div class="about-install-content">
+                <p class="about-install-device-name">Android （Chrome）</p>
+                <ol class="about-install-steps">
+                  <li>Chromeでこのページを開く</li>
+                  <li>画面右上のメニュー（⋮）をタップ</li>
+                  <li>「ホーム画面に追加」を選択</li>
+                  <li>「追加」をタップして完了</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 蓮華堂の紹介（最下段） -->
+          <div class="rengedo-section">
+            <div class="rengedo-logo-wrap">
+              <a href="https://www.rengedo.asia/" target="_blank" rel="noopener">
+                <img src="images/rengedo-logo.png" alt="蓮華堂" class="rengedo-logo-img">
+              </a>
+            </div>
+            <p class="rengedo-text">このアプリは蓮華堂が提供しています。</p>
+            <a href="https://www.rengodo.asia/" target="_blank" class="rengedo-link">
+              www.rengodo.asia
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- データファイル読み込み -->
+  <script src="daily-kotoba.js?v=20260222a"></script>
+  <script src="seasons-data.js?v=7"></script>
+   <!-- アプリのメインロジック -->
+  <script src="app.js?v=20260311b"></script>
+  <!-- Service Worker登録 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js')
+          .then(function(reg) { console.log('SW registered:', reg.scope); })
+          .catch(function(err) { console.log('SW error:', err); });
+      });
+    }
+  </script>
+</body>
+</html>
