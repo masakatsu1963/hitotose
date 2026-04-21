@@ -659,6 +659,10 @@ function shareApp() {
 function changeDay(delta) {
   const newDate = new Date(currentDate);
   newDate.setDate(newDate.getDate() + delta);
+  // 2026年内のみに制限
+  const minDate = new Date(2026, 0, 1);  // 2026/1/1
+  const maxDate = new Date(2026, 11, 31); // 2026/12/31
+  if (newDate < minDate || newDate > maxDate) return;
   currentDate = newDate;
   renderAll();
 }
@@ -747,6 +751,10 @@ function navigateToKouByIndex(targetIndex) {
     newDate.setFullYear(newDate.getFullYear() - 1);
   }
 
+  // 2026年内のみに制限
+  const minDate2 = new Date(2026, 0, 1);
+  const maxDate2 = new Date(2026, 11, 31);
+  if (newDate < minDate2 || newDate > maxDate2) return;
   currentDate = newDate;
   renderAll();
 }
